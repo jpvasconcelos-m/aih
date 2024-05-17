@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AIH:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AIH_jar</output-path>
+    <root id="archive" name="AIH.jar">
+      <element id="module-output" name="AIH" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../itextpdf-5.5.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
