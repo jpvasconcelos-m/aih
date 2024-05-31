@@ -1,0 +1,7 @@
+﻿Para que o programa funcione é necessário que o parâmetro JAVA_HOME
+em variáveis de sistema esteja configurado.
+
+1- Certifique-se de que o JRE está instalado
+2- Rode o Script que detecta as instalações java e configura automaticamente
+a partir da versão selecionada no mesmo ou configure manualmente.
+3- Após isso o programa está pronto para funcionar.
