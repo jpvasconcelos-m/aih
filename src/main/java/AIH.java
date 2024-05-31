@@ -7,12 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.IOException;
 
 public class AIH {
 
@@ -69,13 +70,17 @@ public class AIH {
                     JOptionPane.showMessageDialog(frame, "Etiqueta gerada com sucesso!");
 
                     // Abrir o arquivo PDF gerado
-                    Desktop.getDesktop().open(new File("etiquetas.pdf"));
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().open(new File("etiquetas.pdf"));
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Não foi possível abrir o arquivo PDF gerado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
 
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Por favor, insira números válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(frame, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                } catch (DocumentException | IOException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(frame, "Ocorreu um erro ao gerar o documento PDF.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -106,7 +111,7 @@ public class AIH {
     }
 
     private void gerarEtiquetas(long numeroInicial, long numeroFinal) throws DocumentException, IOException {
-        Document document = new Document(new com.itextpdf.text.Rectangle(42f, 98f), 0, 0, 4, 0);
+        document = new Document(new com.itextpdf.text.Rectangle(42f, 98f), 0, 0, 4, 0);
         document.setPageSize(document.getPageSize().rotate());
 
         try {
@@ -137,9 +142,12 @@ public class AIH {
                 document.add(paragraph2);
             }
         } finally {
-            document.close();
+            if (document != null) {
+                document.close();
+            }
         }
     }
+
     private float getFontSizeForLabelSize(com.itextpdf.text.Rectangle pageSize) {
         // Calculate the font size based on label size
         float labelWidth = pageSize.getWidth() - document.leftMargin() - document.rightMargin();
